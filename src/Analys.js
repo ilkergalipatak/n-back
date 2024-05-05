@@ -1,21 +1,34 @@
 import { Box, Text, VStack } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
+import firebase from 'firebase/compat/app';
+import db from './firebase';
+import { setDoc, doc } from 'firebase/firestore';
+import 'firebase/compat/firestore';
 
 export default function Analysis() {
     const [gameData, setGameData] = useState({});
 
     useEffect(() => {
         const data = localStorage.getItem('gameData');
-        if (data)
+        if (data) {
             setGameData(JSON.parse(data));
+
+            setDoc(doc(db, 'users', localStorage.getItem('playerName')), JSON.parse(data))
+                .then(() => {
+                    console.log("Document successfully written!");
+                })
+                .catch((error) => {
+                    console.error("Error writing document: ", error);
+                });
+        }
     }, []);
 
     const { totalMatches = 0, totalNonMatches = 0, correctMatches = 0, missedMatches = 0, falseAlarms = 0 } = gameData;
-
     const correctMatchPercent = totalMatches > 0 ? ((correctMatches / totalMatches) * 100).toFixed(2) : 0;
     const missedMatchPercent = totalMatches > 0 ? ((missedMatches / totalMatches) * 100).toFixed(2) : 0;
     const falseAlarmPercent = totalNonMatches > 0 ? ((falseAlarms / totalNonMatches) * 100).toFixed(2) : 0;
     const playerName = localStorage.getItem('playerName');
+
     return (
         <Box height="100vh" display="grid" placeItems="center">
             <VStack spacing={3} align="start" justifyContent={'center'}>

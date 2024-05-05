@@ -16,7 +16,7 @@ function StartGame() {
         <VStack spacing={5}>
             <Text fontSize={'3xl'}>N-Back Hafıza Oyunu</Text>
             <Text> Hafıza Oyununa hoş geldiniz. Bu görevde harfleri göreceksiniz. Her harf birkaç saniye boyunca gösterilir. Aynı harfi 2 harf önce görüp görmediğinize karar vermeniz gerekir. Buna n=2 geri görevi denir.
-                Eğer aynı harfi 2 harf önce gördüyseniz "Eşleme" düğmesine basarsınız. Eğer doğru yaptıysanız harfin etrafında yeşil renkler görüyorsunuz. Düğmeye basmamanız gerekirken basarsanız harfin etrafında "kırmızı" görürsünüz.</Text>
+                Eğer aynı harfi 2 harf önce gördüyseniz "Eşleme" düğmesine basarsınız. Eğer doğru yaptıysanız harfin etrafında "yeşil" renkler görürsünüz. Düğmeye basmamanız gerekirken basarsanız harfin etrafında "kırmızı" görürsünüz.</Text>
             <FormControl id="name" isRequired>
                 <FormLabel>İsminizi Girin</FormLabel>
                 <Input
