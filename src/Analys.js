@@ -11,9 +11,23 @@ export default function Analysis() {
     useEffect(() => {
         const data = localStorage.getItem('gameData');
         if (data) {
-            setGameData(JSON.parse(data));
+            const parsedData = JSON.parse(data);
+            setGameData(parsedData);
 
-            setDoc(doc(db, 'users', localStorage.getItem('playerName')), JSON.parse(data))
+            // calculate percents
+            const correctMatchPercent = parsedData.totalMatches > 0 ? ((parsedData.correctMatches / parsedData.totalMatches) * 100).toFixed(2) : 0;
+            const missedMatchPercent = parsedData.totalMatches > 0 ? ((parsedData.missedMatches / parsedData.totalMatches) * 100).toFixed(2) : 0;
+            const falseAlarmPercent = parsedData.totalNonMatches > 0 ? ((parsedData.falseAlarms / parsedData.totalNonMatches) * 100).toFixed(2) : 0;
+
+            // create new data object
+            const newData = {
+                ...parsedData,
+                correctMatchPercent,
+                missedMatchPercent,
+                falseAlarmPercent
+            };
+
+            setDoc(doc(db, 'users', localStorage.getItem('playerName')), newData)
                 .then(() => {
                     console.log("Document successfully written!");
                 })
